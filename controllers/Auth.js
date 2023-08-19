@@ -67,11 +67,8 @@ exports.login = async (req, res) => {
                 expiresIn: "2h"
             })
             user=user.toObject();
-            console.log(user)
             user.token = token;
             user.password = undefined;
-            console.log(user)
-
             // cookies
             const option = {
                 expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), httpOnly: true

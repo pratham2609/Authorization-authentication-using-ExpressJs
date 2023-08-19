@@ -7,8 +7,11 @@ require("dotenv").config()
 exports.auth = async (req, res, next) => {
     try {
         // extract jwt token
-        // 1st way
-        const token = req.body.token;
+        console.log("cookie", req.cookies.token);
+        console.log("body", req.body.token);
+        console.log("header", req.header("Authorization"));
+        const token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ", "");
+        //header me aya Bearer token and bearer  ko replace krdia with empty string toh sirf token nikl gya
         if (!token) {
             return res.status(401).json({
                 success: false,
@@ -24,7 +27,7 @@ exports.auth = async (req, res, next) => {
             return res.status(401).json({
                 success: false,
                 message: "Token invalid"
-            }) 
+            })
         }
         next();
     } catch (error) {
